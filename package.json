@@ -1,0 +1,19 @@
+{
+  "name": "xnote-cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "backpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "backpack-core": "^0.7.0",
+    "regenerator-runtime": "^0.12.0"
+  }
+}
