@@ -1,4 +1,4 @@
-import { Issue, SEVERITY, ValidationError } from './core';
+import { Issue, SEVERITY, ValidationError, ApiError } from './core';
 import Item from './Item';
 import { idGenerator } from './utils';
 
