@@ -5,6 +5,11 @@ require('./re-intro');
 
 const items = [];
 
+function Item(text, isActive) {
+  this.text = text;
+  this.isActive = isActive;
+}
+
 function insert(item) {
   items.push(item);
 }
@@ -48,18 +53,25 @@ const count = props => items
 // ui
 
 console.log('create items');
+const isActive = false;
+const text = '1. Create a todo item.';
+const version = 1;
+const updated = Date.now();
+
+const i0 = { isActive, text, updated, version };
 const i1 = { text: 'learn js', isActive: true };
-const i2 = { text: 'learn node', isActive: false };
-console.log(i1, i2);
+const i2 = new Item('learn node', false);
+console.log(i0, i1, i2);
 
 console.log('add items');
-items.push(i1);
+items.push(i0);
+insert(i1);
 insert(i2);
 console.log(items);
 
 console.log('change item');
 i1.id = 1;
-items[1].id = 2;
+items[2].id = 2;
 console.log(items);
 
 console.log('findOne by id');
