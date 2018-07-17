@@ -1,7 +1,4 @@
-require("regenerator-runtime/runtime");
-require('./re-intro');
+import { ItemRestClient } from './ItemRestClient';
+import itemCli from './itemCli';
 
-import { ItemStore } from './server/ItemStore';
-import itemCli from './client/itemCli';
-
-itemCli(new ItemStore());
+itemCli(new ItemRestClient());

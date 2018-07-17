@@ -1,8 +1,8 @@
-import { Issue, SEVERITY, ValidationError, ApiError } from './core';
-import Item from './Item';
-import { idGenerator } from './utils';
+import { Issue, SEVERITY, ValidationError, ApiError } from '../shared/core';
+import Item from '../shared/Item';
+import { idGenerator } from '../shared/utils/index';
 
-this.items = [];
+const items = [];
 
 const match = (props, item) => {
   const keys = Object.keys(props);
@@ -36,14 +36,14 @@ const fetch = (url, { method = 'GET', body = {}}) => // mock implementation
           } else {
             resolve(
               items
-                .filter(item => match(props, item))
+                .filter(item => match({}, item))
                 .map(item => ({...item}))
             );
           }
           break;
         }
         case 'POST': {
-          const item = {...body};
+          const item = body;
           item.id = idGenerator.next();
           ensureValidItem(item);
           items.push(item);
@@ -51,7 +51,7 @@ const fetch = (url, { method = 'GET', body = {}}) => // mock implementation
           break;
         }
         case 'PUT': {
-          const item = {...body};
+          const item = body;
           ensureValidItem(item);
           const index = items.findIndex(it => item.id === it.id);
           if (index !== -1) {
@@ -72,6 +72,7 @@ const fetch = (url, { method = 'GET', body = {}}) => // mock implementation
         }
       }
     } catch(error) {
+      console.error(error);
       resolve(new ApiError(error instanceof ValidationError
         ? error.issues
         : [new ApiError(new Issue(SEVERITY.ERROR, 'api', 'Unexpected error'))]));
@@ -80,7 +81,7 @@ const fetch = (url, { method = 'GET', body = {}}) => // mock implementation
 
 export class ItemRestClient {
   async create(item) {
-    return await fetch('items', { method: 'GET' });
+    return await fetch('items', { method: 'POST', body: item });
   }
 
   async read(id) {

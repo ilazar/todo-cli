@@ -1,5 +1,5 @@
 import readline from 'readline';
-import Item from './Item';
+import Item from '../shared/Item';
 
 const cli = (() => {
   const commandMap = {};
@@ -38,11 +38,11 @@ const cli = (() => {
 
 const itemCli = itemRestClient => {
   cli.command('show', 'Show items', async () => {
-    console.log(await itemRestClient.find({}));
+    console.log(await itemRestClient.search({}));
   });
   cli.command('add', 'Add item', async (args) => {
     try {
-      console.log(await itemRestClient.insert(new Item(args, true)));
+      console.log(await itemRestClient.create(new Item(args, true)));
     } catch(error) {
       console.log(error.issues);
     }
