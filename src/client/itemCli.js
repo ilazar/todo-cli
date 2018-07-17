@@ -1,5 +1,5 @@
 import readline from 'readline';
-import Item from './Item';
+import Item from '../shared/Item';
 
 const cli = (() => {
   const commandMap = {};
@@ -36,19 +36,19 @@ const cli = (() => {
   }
 })();
 
-const itemCli = itemStore => {
+const itemCli = itemRestClient => {
   cli.command('show', 'Show items', async () => {
-    console.log(await itemStore.find({}));
+    console.log(await itemRestClient.search({}));
   });
   cli.command('add', 'Add item', async (args) => {
     try {
-      console.log(await itemStore.insert(new Item(args, true)));
+      console.log(await itemRestClient.create(new Item(args, true)));
     } catch(error) {
       console.log(error.issues);
     }
   });
   cli.command('remove', 'Remove item by id', async (args) => {
-    console.log(await itemStore.remove(parseInt(args)));
+    console.log(await itemRestClient.remove(parseInt(args)));
   });
   cli.setErrorHandler = error => console.log(error.issue);
   cli.start();

@@ -1,6 +1,6 @@
-import { Issue, SEVERITY, ValidationError } from './core';
-import Item from './Item';
-import { idGenerator } from './utils';
+import { Issue, SEVERITY, ValidationError } from '../shared/core/index';
+import Item from '../shared/Item';
+import { idGenerator } from '../shared/utils/index';
 
 const match = (props, item) => {
   const keys = Object.keys(props);
