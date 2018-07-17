@@ -7,14 +7,13 @@ const cli = (() => {
 
   const start = () => {
     const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-    rl.on('line', input => {
+    rl.on('line', async input => {
       const [name, ...args] = input.split(' ');
       const command = commandMap[name];
       if (command) {
         try {
-          command.actionFn(args.length > 0 ? args[0] : null, () => {
-            console.log(`command ${name} done`);
-          })
+          await command.actionFn(args.length > 0 ? args[0] : null);
+          console.log(`command ${name} done`);
         } catch(error) {
           if (errorHandler) {
             errorHandler(error);
@@ -23,7 +22,7 @@ const cli = (() => {
           }
         }
       } else {
-        console.log(`unknown command`);
+        console.log(`unknown command ${name}`);
       }
     })
   };
@@ -38,21 +37,18 @@ const cli = (() => {
 })();
 
 const itemCli = itemStore => {
-  cli.command('show', 'Show items', (_, done) => {
-    console.log(itemStore.find({}));
-    done();
+  cli.command('show', 'Show items', async () => {
+    console.log(await itemStore.find({}));
   });
-  cli.command('add', 'Add item', (args, done) => {
+  cli.command('add', 'Add item', async (args) => {
     try {
-      console.log(itemStore.insert(new Item(args, true)));
+      console.log(await itemStore.insert(new Item(args, true)));
     } catch(error) {
       console.log(error.issues);
     }
-    done();
   });
-  cli.command('remove', 'Remove item by id', (args, done) => {
-    console.log(itemStore.remove(parseInt(args)));
-    done();
+  cli.command('remove', 'Remove item by id', async (args) => {
+    console.log(await itemStore.remove(parseInt(args)));
   });
   cli.setErrorHandler = error => console.log(error.issue);
   cli.start();
