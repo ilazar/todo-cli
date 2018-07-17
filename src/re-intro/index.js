@@ -6,5 +6,6 @@ require('./variables');
 require('./objects');
 require('./arrays');
 require('./functions');
-require('./custom-objects');
+
+require('./custom-types');
 require('./async-calls');
