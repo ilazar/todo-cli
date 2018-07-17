@@ -39,7 +39,7 @@ Branches
   - move todo list code from index to ItemStore
   - write ItemStore type [class, property]
     - [constructor]
-	- find, save, update, remove [method]
+	- find, insert, update, remove [method]
 	- exception handling (throw validation errors) [error]
 	- id generator [closure, IIF, generator function]
 
