@@ -25,3 +25,36 @@ console.assert(item instanceof Item); // tests whether the prototype prop of
                                       // a constructor appears in the prototype chain
 
 // classes
+
+class B {
+  constructor({ p }) {
+    this.p = p;
+  }
+  method() {
+    return this.p;
+  }
+  static staticMethod(b) {
+    return b.p;
+  }
+}
+
+const b = new B({ p: 'b' });
+console.assert(b instanceof B);
+console.assert(b.p === 'b');
+console.assert(b.method() === 'b');
+console.assert(B.staticMethod(b) === 'b');
+
+class D extends B {
+  constructor({ q, ...rest }) {
+    super(rest);
+    this.q = q;
+  }
+  method() {
+    return super.method() + this.q;
+  }
+}
+
+const d = new D({ p: 'b', q: 'd' });
+console.assert(d instanceof B && d instanceof B);
+console.assert(d.p === 'b' && d.q === 'd');
+console.assert(d.method() === 'bd');
