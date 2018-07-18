@@ -1,9 +1,13 @@
+import http from 'http';
 import Koa from 'koa';
 import Router from 'koa-router';
 import bodyParser from 'koa-bodyparser';
 import itemRouter from './itemRouter';
+import { initWss } from './itemWss';
 
 const app = new Koa();
+const server = http.createServer(app.callback());
+initWss(server);
 
 const exceptionHandler = async (ctx, next) => {
   try {
@@ -39,4 +43,4 @@ app
   .use(apiRouter.allowedMethods());
 
 console.log('server - listening on port', 3000);
-app.listen(3000);
+server.listen(3000);

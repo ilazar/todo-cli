@@ -1,5 +1,6 @@
 import Router from 'koa-router';
 import { ItemStore } from './ItemStore';
+import { notifyClients } from './itemWss';
 
 const itemStore = new ItemStore();
 
@@ -23,8 +24,10 @@ router.get('/:id', async (ctx) => { // read
 });
 
 router.post('/', async (ctx) => { // create
-  ctx.response.body = await itemStore.insert(ctx.request.body);
+  const item = await itemStore.insert(ctx.request.body);
+  ctx.response.body = item;
   ctx.response.status = 201; // created
+  notifyClients({ event: 'item/added', data: item });
 });
 
 router.put('/:id', async (ctx) => { // update
@@ -40,6 +43,7 @@ router.put('/:id', async (ctx) => { // update
   if (updatedCount === 1) {
     response.body = item;
     response.status = 200; // ok
+    notifyClients({ event: 'item/updated', data: item });
   } else {
     response.body = { issues: [{ severity: 'error', description: 'Resource no longer exists' }] };
     response.status = 405; // method not allowed
@@ -51,6 +55,7 @@ router.del('/:id', async (ctx) => { // delete
   const count = await itemStore.remove({ id });
   ctx.response.body = {};
   ctx.response.status = 204; // no content
+  notifyClients({ event: 'item/deleted', data: { id } });
 });
 
 export default router;

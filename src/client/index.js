@@ -1,4 +1,4 @@
-import { ItemRestClient } from './ItemRestClient';
+import itemService from './itemService';
 import itemCli from './itemCli';
 
-itemCli(new ItemRestClient());
+itemCli();

@@ -114,7 +114,7 @@ Branches
 	  - index.js
 	  - App.js - component showing ItemList
 	  - ItemList.js - component with an inner template ItemListTemplate producing an html fragment
-	  - ItemService.js, ItemWsClient.js, ItemRestClient.js
+	  - itemService.js, ItemWsClient.js, ItemRestClient.js
   - App and ItemList defined as components having a simple onInit - onDestroy lifecycle
   - ItemList shows a loading text before items are fetched
   - discuss component state changes
@@ -127,7 +127,7 @@ Branches
 	  - index.js
 	  - App.js - component showing ItemEdit and ItemList
 	  - ItemList.js, ItemEdit.js
-	  - ItemService.js, ItemWsClient.js, ItemRestClient.js
+	  - itemService.js, ItemWsClient.js, ItemRestClient.js
   - create and update items handled by ItemEdit; delete item handled by ItemList
   - discuss event handling
 
@@ -138,7 +138,7 @@ Branches
 	  - index.js
 	  - App.js - component showing ItemEdit and ItemList
 	  - ItemList.js, ItemEdit.js
-	  - ItemService.js, ItemWsClient.js, ItemRestClient.js
+	  - itemService.js, ItemWsClient.js, ItemRestClient.js
   - add a render method to components lifecycle
   - discuss component properties and state
 
@@ -149,7 +149,7 @@ Branches
 	  - index.js
 	  - App.js - component showing ItemEdit and ItemList
 	  - ItemList.js, ItemEdit.js
-	  - Store.js, Provider.js, ItemService.js, ItemWsClient.js, ItemRestClient.js
+	  - Store.js, Provider.js, itemService.js, ItemWsClient.js, ItemRestClient.js
   - implement a simple redux Store
   - refactor ItemService in terms of actions and reducers
   - write a simple Provider and provide the store to the entire App
