@@ -1,12 +1,22 @@
-const Koa = require('koa');
+import Koa from 'koa';
+import Router from 'koa-router';
+import bodyParser from 'koa-bodyparser';
+import itemRouter from './itemRouter';
+
 const app = new Koa();
 
 const exceptionHandler = async (ctx, next) => {
   try {
     return await next();
   } catch (err) {
-    ctx.body = { message: err.message || 'Unexpected error.' };
-    ctx.status = err.status || 500;
+    console.error(err);
+    if (err.issues) {
+      ctx.response.body = { issues: err.issues };
+      ctx.response.status = 400; // bad request
+    } else {
+      ctx.response.body = { issues: [{ severity: 'error', description: 'Unexpected error' }] };
+      ctx.response.status = err.status || 500;
+    }
   }
 };
 
@@ -18,11 +28,15 @@ const timingLogger = async (ctx, next) => {
 
 app.use(exceptionHandler);
 app.use(timingLogger);
+app.use(bodyParser());
 
-app.use(async ctx => {
-  const name = ctx.request.query.name;
-  ctx.response.body = `Hello ${name || 'World'}`;
-});
+const prefix = '/api';
+
+const apiRouter = new Router({ prefix });
+apiRouter.use('/item', itemRouter.routes());
+app
+  .use(apiRouter.routes())
+  .use(apiRouter.allowedMethods());
 
 console.log('server - listening on port', 3000);
 app.listen(3000);
