@@ -13,7 +13,8 @@
     "koa": "^2.5.2",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
-    "node-fetch": "^2.1.2"
+    "node-fetch": "^2.1.2",
+    "ws": "^5.2.2"
   },
   "devDependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
