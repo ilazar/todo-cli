@@ -50,7 +50,7 @@ const itemCli = itemRestClient => {
   cli.command('remove', 'Remove item by id', async (args) => {
     console.log(await itemRestClient.remove(parseInt(args)));
   });
-  cli.setErrorHandler = error => console.log(error.issue);
+  cli.setErrorHandler(error => console.log(error));
   cli.start();
 };
 

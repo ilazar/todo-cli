@@ -1,6 +1,6 @@
-import { Issue, SEVERITY, ValidationError } from '../shared/core/index';
+import { Issue, SEVERITY, ValidationError } from '../shared/core';
 import Item from '../shared/Item';
-import { idGenerator } from '../shared/utils/index';
+import { idGenerator } from '../shared/utils';
 
 const match = (props, item) => {
   const keys = Object.keys(props);
@@ -64,7 +64,7 @@ export class ItemStore {
     if (!item) {
       throw new ValidationError([new Issue(SEVERITY.WARNING, 'item', 'Invalid argument')]);
     }
-    const issues = item.validate();
+    const issues = item instanceof Item ? item.validate() : Item.prototype.validate.call(item);
     if (issues.length > 0) {
       throw new ValidationError(issues);
     }
