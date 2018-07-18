@@ -1,6 +1,7 @@
 import Koa from 'koa';
 import Router from 'koa-router';
 import bodyParser from 'koa-bodyparser';
+import cors from '@koa/cors';
 import itemRouter from './itemRouter';
 
 const app = new Koa();
@@ -26,6 +27,7 @@ const timingLogger = async (ctx, next) => {
   console.log(`server - ${ctx.method} ${ctx.url} => ${ctx.response.status}, ${Date.now() - start}ms`);
 };
 
+app.use(cors());
 app.use(exceptionHandler);
 app.use(timingLogger);
 app.use(bodyParser());
@@ -38,5 +40,5 @@ app
   .use(apiRouter.routes())
   .use(apiRouter.allowedMethods());
 
-console.log('server - listening on port', 3000);
-app.listen(3000);
+console.log('server - listening on port', 3001);
+app.listen(3001);

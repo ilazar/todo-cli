@@ -16,6 +16,8 @@ const match = (props, item) => {
 export class ItemStore {
   constructor() {
     this.items = [];
+    this.insert(new Item('a', true));
+    this.insert(new Item('b', false));
   }
 
   insert(item) {

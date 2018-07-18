@@ -29,7 +29,7 @@ router.post('/', async (ctx) => { // create
 
 router.put('/:id', async (ctx) => { // update
   const item = ctx.request.body;
-  const id = ctx.params.id;
+  const id = parseInt(ctx.params.id);
   const response = ctx.response;
   if (item.id !== id) {
     response.body = { issues: [{ severity: 'error', description: 'Param id and body id should be the same' }] };
